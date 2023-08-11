@@ -1,0 +1,34 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JqueryUi_NilNul.master.cs" Inherits="nilnul.web._ctr_.WEB._CTR_._Demo_web._master.JqueryUi_NilNul" %>
+
+<%@ Register Assembly="nilnul.web._js_.WEB._CTR_" Namespace="nilnul.web.js._web._ctr" TagPrefix="cc2" %>
+
+<%@ Register Assembly="nilnul.web._css_.WEB._CTR_" Namespace="nilnul.web.css._web._ctr" TagPrefix="cc4" %>
+
+
+
+
+
+<%@ Register Assembly="nilnul.web._js_.WEB._CTR_" namespace="nilnul.web.script.webctrl" tagprefix="cc1" %>
+
+
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+	<cc4:JQueryUi ID="JQueryUi1" runat="server" />
+	<cc2:JqueryNilnul ID="JqueryNilnul2" runat="server"></cc2:JqueryNilnul>
+
+
+</head>
+<body>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+</body>
+</html>

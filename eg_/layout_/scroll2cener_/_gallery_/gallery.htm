@@ -1,0 +1,216 @@
+<html>
+<head>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		h1 {
+			font-size: clamp(3rem, 12vw + 1rem, 20rem);
+			position: fixed;
+			font-family: sans-serif;
+			left: 0;
+			rotate: -25deg;
+			translate: 5% 30%;
+			top: 0;
+			margin: 0;
+			line-height: 0.9;
+			color: hsl(0 0% 70%);
+		}
+
+		html {
+			scroll-behavior: smooth;
+			scroll-margin-top: 2rem;
+		}
+
+		body {
+			display: flex;
+			min-height: 100vh;
+			align-items: center;
+			flex-direction: column;
+			padding: 50vh 0;
+			/*   background: hsl(0 0% 10%); */
+		}
+
+		ul {
+			grid-auto-flow: dense;
+			padding: 0;
+			margin: 0;
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			width: 90vmin;
+			list-style-type: none;
+			gap: 1rem;
+		}
+
+		li {
+			grid-column: span var(--span-x, 1);
+			grid-row: span var(--span-y, 1);
+			animation: enter both ease-in-out;
+			animation-timeline: view();
+			animation-range: entry;
+		}
+
+		@keyframes enter {
+			from {
+				translate: 0 100%;
+				scale: 0.25;
+				opacity: 0.5;
+			}
+		}
+
+		@keyframes exit {
+			to {
+				translate: 0 -15vh;
+				opacity: 0.5;
+			}
+		}
+
+		button {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			cursor: pointer;
+			border: 0;
+			border-radius: 1rem;
+		}
+
+		img {
+			border-radius: 1rem;
+			max-width: 100%;
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+		}
+
+		li:nth-of-type(1n) {
+			--span-x: 1;
+			--span-y: 2;
+		}
+
+		li:nth-of-type(2n) {
+			--span-x: 2;
+			--span-y: 2;
+		}
+
+		li:nth-of-type(3n) {
+			--span-x: 1;
+			--span-y: 3;
+		}
+
+		li:nth-of-type(2n + 1) {
+			--span-x: 1;
+			--span-y: 1;
+		}
+
+		li.full {
+			--span-x: 4;
+			--span-y: 4;
+		}
+	</style>
+
+</head>
+
+<body>
+	<h1>Scroll &<br>Tap</h1>
+	<ul class="grid"></ul>
+
+	<script type="text/template" >
+		// the following is used by codepen to detect and prevent infinite loops; we dont need it when we are out of codepen;
+
+		"use strict";
+		"object" != typeof window.CP && (window.CP = {}), window.CP.PenTimer = { programNoLongerBeingMonitored: !1, timeOfFirstCallToShouldStopLoop: 0, _loopExits: {}, _loopTimers: {}, START_MONITORING_AFTER: 2e3, STOP_ALL_MONITORING_TIMEOUT: 5e3, MAX_TIME_IN_LOOP_WO_EXIT: 2200, exitedLoop: function (o) { this._loopExits[o] = !0 }, shouldStopLoop: function (o) { if (this.programKilledSoStopMonitoring) return !0; if (this.programNoLongerBeingMonitored) return !1; if (this._loopExits[o]) return !1; var t = this._getTime(); if (0 === this.timeOfFirstCallToShouldStopLoop) return this.timeOfFirstCallToShouldStopLoop = t, !1; var i = t - this.timeOfFirstCallToShouldStopLoop; if (i < this.START_MONITORING_AFTER) return !1; if (i > this.STOP_ALL_MONITORING_TIMEOUT) return this.programNoLongerBeingMonitored = !0, !1; try { this._checkOnInfiniteLoop(o, t) } catch (o) { return this._sendErrorMessageToEditor(), this.programKilledSoStopMonitoring = !0, !0 } return !1 }, _sendErrorMessageToEditor: function () { try { if (this._shouldPostMessage()) { var o = { action: "infinite-loop", line: this._findAroundLineNumber() }; parent.postMessage(JSON.stringify(o), "*") } else this._throwAnErrorToStopPen() } catch (o) { this._throwAnErrorToStopPen() } }, _shouldPostMessage: function () { return document.location.href.match(/boomerang/) }, _throwAnErrorToStopPen: function () { throw "We found an infinite loop in your Pen. We've stopped the Pen from running. Please correct it or contact support@codepen.io." }, _findAroundLineNumber: function () { var o = new Error, t = 0; if (o.stack) { var i = o.stack.match(/boomerang\S+:(\d+):\d+/); i && (t = i[1]) } return t }, _checkOnInfiniteLoop: function (o, t) { if (!this._loopTimers[o]) return this._loopTimers[o] = t, !1; var i = t - this._loopTimers[o]; if (i > this.MAX_TIME_IN_LOOP_WO_EXIT) throw "Infinite Loop found on loop: " + o }, _getTime: function () { return +new Date } }, window.CP.shouldStopExecution = function (o) { var t = window.CP.PenTimer.shouldStopLoop(o); return t === !0 && console.warn("[CodePen]: An infinite loop (or a loop taking too long) was detected, so we stopped its execution. Sorry!"), t }, window.CP.exitedLoop = function (o) { window.CP.PenTimer.exitedLoop(o) };
+	</script>
+	<script>
+
+		console.clear();
+
+		const VT = update => {
+			if (!document.startViewTransition) update();
+			return document.startViewTransition(update);
+		};
+
+		const COUNT = 58;
+		const LIST = document.querySelector('ul');
+		for (let i = 0; i < COUNT; i++) {
+			//if (window.CP.shouldStopExecution(0)) break;
+			const LI = Object.assign(document.createElement('li'), {
+				style: `view-transition-name: item-${i}`,
+				innerHTML: `
+				  <button>
+					<img src="https://picsum.photos/800/800?random=${i}"
+				  </button>
+				` });
+
+			LI.dataset.index = i;
+			LIST.appendChild(LI);
+		}
+		//window.CP.exitedLoop(0);
+
+		let selected;
+		let yPos;
+
+		const handleRetraction = () => {
+			if (selected) RETRACT(selected);
+		};
+
+		const RETRACT = item => {
+			const retraction = VT(() => {
+				window.scrollTo(0, yPos);
+				item.classList.remove('full');
+			});
+			retraction.finished.then(() => {
+				item.dataset.expanded = false;
+				item.style.zIndex = 1;
+				item = null;
+				document.body.removeEventListener('click', handleRetraction);
+			});
+		};
+
+		const EXPAND = item => {
+			item.dataset.expanded = true;
+			item.classList.add('full');
+			item.scrollIntoView({
+				block: 'center'
+			});
+
+			document.body.addEventListener('click', handleRetraction);
+		};
+
+		const handleExpansion = event => {
+			const ITEM = event.target.closest('li');
+			if (ITEM.dataset.expanded === 'true') {
+				// We are taking it down.
+				RETRACT(ITEM);
+			} else {
+				// Check if there is an expansion already...
+				const expanded = document.querySelector('[data-expanded=true]');
+				if (expanded) {
+					document.body.removeEventListener('click', handleRetraction);
+				}
+				selected = ITEM;
+				selected.style.zIndex = 10;
+				yPos = window.pageYOffset;
+				const expansion = VT(() => {
+					if (expanded) {
+						expanded.classList.remove('full');
+						expanded.dataset.expanded = false;
+						expanded.style.zIndex = 1;
+					}
+					EXPAND(selected);
+				});
+			}
+		};
+
+		const BUTTONS = LIST.querySelectorAll('button');
+		BUTTONS.forEach(BUTTON => {
+			BUTTON.addEventListener('click', handleExpansion);
+		});
+
+
+
+
+	</script>
+</body>
+</html>
+

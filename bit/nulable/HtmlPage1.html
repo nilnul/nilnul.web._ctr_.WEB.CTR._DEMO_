@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<style>
+		input:indeterminate {
+			background: lime;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		function ts( cb ) {
+			//this happens when checked is already set.
+			if ( cb.readOnly ) /*readonly is used to determine whether it's indeterminate*/ {
+				cb.checked = cb.readOnly = false;
+				cb.title = "0";
+			}
+			else if ( !cb.checked ) {
+				cb.readOnly = cb.indeterminate = true;
+				cb.title = "nul";
+			} else {
+				cb.title = "1";
+			}
+		}
+
+
+/**/</script>
+	<!-- Inline click handler, just for demo -->
+	<label>
+
+		<input type="checkbox" id="cb1" onclick="ts(this)" title="0" />
+		aa
+	</label>
+
+	<script>
+		var e = document.getElementById( "cb1" );
+		e.readOnly = e.indeterminate = true;
+		e.title = "null";
+	</script>
+</body>
+</html>

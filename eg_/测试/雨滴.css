@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.contents{
+    width: 100vw;
+    height: 100vh;
+    background: url(img1.png) center center no-repeat;
+    background-size: cover;
+}
+#rainBox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+.rain{
+    position:absolute;
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(rgba(255,255,255,.3),rgba(255,255,255,.6));
+}
