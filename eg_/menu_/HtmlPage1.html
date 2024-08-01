@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		/* Reset some default styles */
+		body, ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			display: flex;
+			overflow: hidden; /* Hide the overflow when the menu is closed */
+		}
+
+		.menu {
+			width: 0; /* Initially, the menu is hidden */
+			height: 100%;
+			background-color: #333;
+			transition: width 0.3s; /* Transition for smooth animation */
+		}
+
+			.menu ul {
+				list-style: none;
+				padding: 0;
+			}
+
+			.menu li {
+				padding: 1rem;
+			}
+
+			.menu a {
+				color: white;
+				text-decoration: none;
+			}
+
+		.content {
+			flex-grow: 1; /* Allow content to fill remaining space */
+			padding: 1rem;
+		}
+
+		.toggle-menu {
+			background-color: #333;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+		}
+
+			/* CSS to reveal the menu when button is clicked */
+		.container:has(.content .toggle-menu:focus) .menu {
+			width: 250px; /* Adjust the width as needed */
+		}
+	</style>
+	<title>Sliding Menu</title>
+</head>
+<body>
+	<div class="container">
+		<div class="menu">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Services</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div>
+		<div class="content">
+			<button class="toggle-menu">Toggle Menu</button>
+			<p>This is the main content of your page.</p>
+		</div>
+	</div>
+</body>
+</html>
